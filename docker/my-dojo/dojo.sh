@@ -28,7 +28,12 @@ select_yaml_files() {
   yamlFiles="-f $DIR/docker-compose.yaml"
 
   if [ "$BITCOIND_INSTALL" == "on" ]; then
-    yamlFiles="$yamlFiles -f $DIR/overrides/bitcoind.install.yaml"
+    if [ "$DOJO_USE_BLOCKSAT" == "true" ]; then
+      yamlFiles="$yamlFiles -f $DIR/overrides/bitcoinfibre.install.yaml"
+      yamlFiles="$yamlFiles -f $DIR/overrides/blocksat.install.yaml"
+    else
+      yamlFiles="$yamlFiles -f $DIR/overrides/bitcoind.install.yaml"
+    fi
 
     if [ "$BITCOIND_RPC_EXTERNAL" == "on" ]; then
       yamlFiles="$yamlFiles -f $DIR/overrides/bitcoind.rpc.expose.yaml"
@@ -179,6 +184,8 @@ uninstall() {
   docker image rm samouraiwallet/dojo-nginx:"$DOJO_NGINX_VERSION_TAG"
   docker image rm samouraiwallet/dojo-tor:"$DOJO_TOR_VERSION_TAG"
   docker image rm samouraiwallet/dojo-indexer:"$DOJO_INDEXER_VERSION_TAG"
+  docker image rm samouraiwallet/dojo-bitcoinfibre:latest
+  docker image rm blocksat:latest
 
   docker volume prune
 }

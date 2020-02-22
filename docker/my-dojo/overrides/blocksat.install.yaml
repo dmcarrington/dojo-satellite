@@ -1,0 +1,31 @@
+version: "3.2"
+
+services:
+  blocksat:
+    image: "blocksat"
+    container_name: blocksat
+    build:
+      context: ./blocksat
+    env_file:
+      - ./.env
+      - ./conf/docker-common.conf
+      #- ./conf/docker-bitcoind.conf
+    restart: always
+    privileged: true
+    command: "/wait-for-it.sh tor:9050 --timeout=720 --strict -- /restart.sh"
+    expose:
+      - "8333"
+      - "28256"
+      - "9501"
+      - "9502"
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+      - /tmp:/tmp
+    networks:
+      dojonet:
+        ipv4_address: 172.28.1.8
+
+  #node:
+  #  depends_on:
+  #    - blocksat
+

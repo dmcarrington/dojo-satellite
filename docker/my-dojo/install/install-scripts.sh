@@ -84,3 +84,10 @@ init_config_files() {
     echo "Initialized index.js (admin module)"
   fi
 }
+
+#install_blocksat() {
+#  wget -qO /tmp/satellite-master.zip https://github.com/Blockstream/satellite/archive/master.zip
+#  unzip /tmp/satellite-master.zip -d /tmp
+#  docker build -t blocksat /tmp/satellite-master/
+#  rm -rf /tmp/satellite-master
+#}
