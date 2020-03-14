@@ -48,6 +48,12 @@ init_config_files() {
 
   cp ./conf/docker-bitcoind.conf.tpl ./conf/docker-bitcoind.conf
   echo "Initialized docker-bitcoind.conf"
+
+  cp ./conf/docker-bitcoinfibre.conf.tpl ./conf/docker-bitcoinfibre.conf
+  echo "Initialized docker-bitcoinfibre.conf"
+
+  cp ./conf/docker-blocksat.conf.tpl ./conf/docker-blocksat.conf
+  echo "Initialized docker-blocksat.conf"
   
   cp ./conf/docker-mysql.conf.tpl ./conf/docker-mysql.conf
   echo "Initialized docker-mysql.conf"
@@ -85,9 +91,4 @@ init_config_files() {
   fi
 }
 
-#install_blocksat() {
-#  wget -qO /tmp/satellite-master.zip https://github.com/Blockstream/satellite/archive/master.zip
-#  unzip /tmp/satellite-master.zip -d /tmp
-#  docker build -t blocksat /tmp/satellite-master/
-#  rm -rf /tmp/satellite-master
-#}
+

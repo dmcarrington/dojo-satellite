@@ -29,9 +29,11 @@ select_yaml_files() {
 
   if [ "$BITCOIND_INSTALL" == "on" ]; then
     if [ "$DOJO_USE_BLOCKSAT" == "true" ]; then
+      #echo "Blocksat option enabled, will build bitcoinfibre for bitcoind container"
       yamlFiles="$yamlFiles -f $DIR/overrides/bitcoinfibre.install.yaml"
       yamlFiles="$yamlFiles -f $DIR/overrides/blocksat.install.yaml"
     else
+      #echo "Using conventional bitcoind"
       yamlFiles="$yamlFiles -f $DIR/overrides/bitcoind.install.yaml"
     fi
 
@@ -120,6 +122,7 @@ stop() {
   fi
   # Stop docker containers
   yamlFiles=$(select_yaml_files)
+  echo "stopping $yamlFiles"
   eval "docker-compose $yamlFiles stop"
 }
 
@@ -364,6 +367,13 @@ logs() {
       ;;
   esac
 }
+
+#create_blocksat() {
+#  wget -qO /tmp/satellite-master.zip https://github.com/Blockstream/satellite/archive/master.zip
+#  unzip /tmp/satellite-master.zip -d /tmp
+#  docker build -t blocksat /tmp/satellite-master/
+#  rm -rf /tmp/satellite-master
+#}
 
 # Display the help
 help() {
