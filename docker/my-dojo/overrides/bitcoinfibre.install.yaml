@@ -20,7 +20,7 @@ services:
     volumes:
       - data-bitcoind:/home/bitcoin/.bitcoin
       - data-tor:/var/lib/tor
-      - /tmp/blocksat:/tmp/blocksat
+      - data-blocksat:/tmp/blocksat
     depends_on:
       - db
       - tor

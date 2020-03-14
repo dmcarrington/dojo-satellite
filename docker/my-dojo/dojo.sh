@@ -187,8 +187,8 @@ uninstall() {
   docker image rm samouraiwallet/dojo-nginx:"$DOJO_NGINX_VERSION_TAG"
   docker image rm samouraiwallet/dojo-tor:"$DOJO_TOR_VERSION_TAG"
   docker image rm samouraiwallet/dojo-indexer:"$DOJO_INDEXER_VERSION_TAG"
-  docker image rm samouraiwallet/dojo-bitcoinfibre:latest
-  docker image rm blocksat:latest
+  docker image rm samouraiwallet/dojo-bitcoinfibre:"$DOJO_BITCOIND_VERSION_TAG"
+  docker image rm blocksat
 
   docker volume prune
 }

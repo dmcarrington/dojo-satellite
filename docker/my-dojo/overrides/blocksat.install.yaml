@@ -9,7 +9,7 @@ services:
     env_file:
       - ./.env
       - ./conf/docker-common.conf
-      #- ./conf/docker-bitcoind.conf
+      - ./conf/docker-blocksat.conf
     restart: always
     privileged: true
     command: "/wait-for-it.sh tor:9050 --timeout=720 --strict -- /restart.sh"
@@ -20,11 +20,13 @@ services:
       - "9502"
     volumes:
       - /dev/bus/usb:/dev/bus/usb
-      - /tmp:/tmp
+      - data-blocksat:/tmp/blocksat
     networks:
       dojonet:
         ipv4_address: 172.28.1.8
 
+volumes: 
+  data-blocksat:
   #node:
   #  depends_on:
   #    - blocksat
