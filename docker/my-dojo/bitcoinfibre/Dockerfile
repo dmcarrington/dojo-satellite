@@ -2,15 +2,11 @@ FROM    ubuntu:bionic
 
 
 #################################################################
-# INSTALL BITCOIN
+# INSTALL BITCOINFIBRE
 #################################################################
 ENV     BITCOIN_HOME        /home/bitcoin
 ENV     BITCOIN_VERSION     0.19.0.1
 ENV     BITCOIN_URL         https://github.com/bitcoinfibre/bitcoinfibre/archive/master.zip
-#ENV     BITCOIN_SHA256      732cc96ae2e5e25603edf76b8c8af976fe518dd925f7e674710c6c8ee5189204
-#ENV     BITCOIN_ASC_URL     https://bitcoincore.org/bin/bitcoin-core-0.19.0.1/SHA256SUMS.asc
-#ENV     BITCOIN_PGP_KS_URI  hkp://keyserver.ubuntu.com:80
-#ENV     BITCOIN_PGP_KEY     01EA5486DE18A882D4C2684590C8019E36C2E964
 
 RUN     set -ex && \
         apt-get update && \
@@ -27,11 +23,6 @@ RUN     set -ex && \
 RUN     set -ex && \
         cd /tmp && \
         wget -qO bitcoin.zip "$BITCOIN_URL" && \
-        #echo "$BITCOIN_SHA256 bitcoin.tar.gz" | sha256sum -c - && \
-        #gpg --batch --keyserver "$BITCOIN_PGP_KS_URI" --recv-keys "$BITCOIN_PGP_KEY" && \
-        #wget -qO bitcoin.asc "$BITCOIN_ASC_URL" && \
-        #gpg --batch --verify bitcoin.asc && \
-        #tar -xzvf bitcoin.tar.gz -C /usr/local --strip-components=1 --exclude=*-qt && \
         unzip bitcoin.zip && \
         cd bitcoinfibre-master/depends && make NO_QT=1 && \
         cd .. && ./autogen.sh && \

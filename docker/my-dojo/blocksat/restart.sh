@@ -7,8 +7,8 @@ blocksat_options=(
   -f $BLOCKSAT_FREQUENCY
 )
 
-
-blocksat-rx "${blocksat_options[@]}"
+# Avoid timeout waiting for stdin in docker compose
+sleep infinity | blocksat-rx "${blocksat_options[@]}"
 
 # Keep the container up
 while true

@@ -24,10 +24,12 @@ services:
     networks:
       dojonet:
         ipv4_address: 172.28.1.8
+    
+  node:
+    depends_on:
+      - blocksat
 
 volumes: 
   data-blocksat:
-  #node:
-  #  depends_on:
-  #    - blocksat
+  
 
