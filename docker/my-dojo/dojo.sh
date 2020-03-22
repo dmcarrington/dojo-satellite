@@ -160,6 +160,39 @@ install() {
     launchInstall=$?
   fi
 
+  # Detection of past install
+  if [ $launchInstall -eq 0 ]; then
+    pastInstallsfound=$(docker image ls | grep samouraiwallet/dojo-db | wc -l)
+    if [ $pastInstallsfound -ne 0 ]; then
+      # Past installation found. Ask confirmation forreinstall
+      echo -e "\nWarning: Found traces of a previous installation of Dojo on this machine."
+      echo "A new installation requires to remove these elements first."
+      if [ $auto -eq 0 ]; then
+        launchReinstall=0
+      else
+        get_confirmation_reinstall
+        launchReinstall=$?
+      fi
+
+      if [ $launchReinstall -eq 0 ]; then
+        echo ""
+        # Uninstall
+        if [ $auto -eq 0 ]; then
+          uninstall --auto
+          launchReinstall=$?
+        else
+          uninstall
+          launchReinstall=$?
+        fi
+      fi
+
+      if [ $launchReinstall -eq 1 ]; then
+        launchInstall=1
+        echo -e "\nInstallation was cancelled."
+      fi
+    fi
+  fi
+
   # Installation
   if [ $launchInstall -eq 0 ]; then
     # Initialize the config files
@@ -175,10 +208,20 @@ install() {
 
 # Delete everything
 uninstall() {
-  docker-compose rm
+  source "$DIR/install/uninstall-scripts.sh"
 
-  yamlFiles=$(select_yaml_files)
-  eval "docker-compose $yamlFiles down"
+  auto=1
+
+  # Extract install options from arguments
+  if [ $# -gt 0 ]; then
+    for option in $@
+    do
+      case "$option" in
+        --auto )    auto=0 ;;
+        * )         break ;;
+      esac
+    done
+  fi
 
   docker image rm samouraiwallet/dojo-db:"$DOJO_DB_VERSION_TAG"
   docker image rm samouraiwallet/dojo-bitcoind:"$DOJO_BITCOIND_VERSION_TAG"
@@ -189,8 +232,33 @@ uninstall() {
   docker image rm samouraiwallet/dojo-indexer:"$DOJO_INDEXER_VERSION_TAG"
   docker image rm samouraiwallet/dojo-bitcoinfibre:"$DOJO_BITCOIND_VERSION_TAG"
   docker image rm blocksat
+  # Confirmation
+  if [ $auto -eq 0 ]; then
+    launchUninstall=0
+  else
+    get_confirmation
+    launchUninstall=$?
+  fi
 
-  docker volume prune
+  if [ $launchUninstall -eq 0 ]; then
+    docker-compose rm -f
+
+    yamlFiles=$(select_yaml_files)
+    eval "docker-compose $yamlFiles down"
+
+    docker image rm -f samouraiwallet/dojo-db:"$DOJO_DB_VERSION_TAG"
+    docker image rm -f samouraiwallet/dojo-bitcoind:"$DOJO_BITCOIND_VERSION_TAG"
+    docker image rm -f samouraiwallet/dojo-explorer:"$DOJO_EXPLORER_VERSION_TAG"
+    docker image rm -f samouraiwallet/dojo-nodejs:"$DOJO_NODEJS_VERSION_TAG"
+    docker image rm -f samouraiwallet/dojo-nginx:"$DOJO_NGINX_VERSION_TAG"
+    docker image rm -f samouraiwallet/dojo-tor:"$DOJO_TOR_VERSION_TAG"
+    docker image rm -f samouraiwallet/dojo-indexer:"$DOJO_INDEXER_VERSION_TAG"
+
+    docker volume prune -f
+    return 0
+  else
+    return 1
+  fi
 }
 
 # Clean-up (remove old docker images)
@@ -516,7 +584,7 @@ case "$subcommand" in
     stop
     ;;
   uninstall )
-    uninstall
+    uninstall "$@"
     ;;
   upgrade )
     upgrade "$@"
