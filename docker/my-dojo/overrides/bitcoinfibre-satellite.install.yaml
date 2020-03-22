@@ -20,9 +20,11 @@ services:
     volumes:
       - data-bitcoind:/home/bitcoin/.bitcoin
       - data-tor:/var/lib/tor
+      - data-blocksat:/tmp/blocksat
     depends_on:
       - db
       - tor
+      - blocksat
     networks:
       dojonet:
         ipv4_address: 172.28.1.5

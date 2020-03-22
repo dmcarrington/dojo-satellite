@@ -28,9 +28,12 @@ bitcoind_options=(
   -txindex=1
   -zmqpubhashblock=tcp://0.0.0.0:9502
   -zmqpubrawtx=tcp://0.0.0.0:9501
-  -fecreaddevice=/tmp/blocksat/bitcoinfibre
   -reindex
 )
+
+if [ "$DOJO_USE_BLOCKSAT" == "true" ]; then
+  bitcoin_options+=(-fecreaddevice=/tmp/blocksat/bitcoinfibre)
+fi
 
 if [ "$BITCOIND_RPC_EXTERNAL" == "on" ]; then
   bitcoind_options+=(-zmqpubhashtx=tcp://0.0.0.0:9500)

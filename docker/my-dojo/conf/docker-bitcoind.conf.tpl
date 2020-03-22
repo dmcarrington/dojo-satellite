@@ -82,6 +82,11 @@ BITCOIND_RPC_EXTERNAL_IP=127.0.0.1
 # Value: on | off
 BITCOIND_INSTALL=on
 
+# Install and run bitcoinfibre instead of conventional bitcoind to allow satellite operation.
+# Set this to true and then set DOJO_USE_BLOCKSAT to true to enable satellite reception
+# Value: on | off
+BITCOINFIBRE_INSTALL=on
+
 # IP address of bitcoind used by Dojo
 # Set value to 172.28.1.5 if BITCOIND_INSTALL is set to 'on'
 # Type: string
