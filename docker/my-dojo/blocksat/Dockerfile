@@ -11,8 +11,6 @@ RUN     set -ex && \
         apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y satellite && \
         rm -rf /var/lib/apt/lists/*
 
-#ADD     .gnuradio /root/.gnuradio
-
 # Copy restart script
 COPY    ./restart.sh /restart.sh
 RUN     chmod 777 /restart.sh
