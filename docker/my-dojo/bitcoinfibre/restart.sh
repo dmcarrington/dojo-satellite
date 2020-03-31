@@ -32,7 +32,7 @@ bitcoind_options=(
 )
 
 if [ "$DOJO_USE_BLOCKSAT" == "true" ]; then
-  bitcoin_options+=(-fecreaddevice=/tmp/blocksat/bitcoinfibre)
+  bitcoind_options+=(-fecreaddevice=/tmp/blocksat/bitcoinfibre)
 fi
 
 if [ "$BITCOIND_RPC_EXTERNAL" == "on" ]; then
