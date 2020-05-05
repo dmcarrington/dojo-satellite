@@ -28,13 +28,9 @@ select_yaml_files() {
   yamlFiles="-f $DIR/docker-compose.yaml"
 
   if [ "$BITCOIND_INSTALL" == "on" ]; then
-    if [ "$BITCOINFIBRE_INSTALL" == "on" ]; then
-      if [ "$DOJO_USE_BLOCKSAT" == "true" ]; then
-        yamlFiles="$yamlFiles -f $DIR/overrides/bitcoinfibre-satellite.install.yaml"
-        yamlFiles="$yamlFiles -f $DIR/overrides/blocksat.install.yaml"
-      else
-        yamlFiles="$yamlFiles -f $DIR/overrides/bitcoinfibre.install.yaml"
-      fi
+    if [ "$DOJO_USE_BLOCKSAT" == "true" ]; then
+      yamlFiles="$yamlFiles -f $DIR/overrides/bitcoinsatellite.install.yaml"
+      yamlFiles="$yamlFiles -f $DIR/overrides/blocksat2.install.yaml"
     else
       yamlFiles="$yamlFiles -f $DIR/overrides/bitcoind.install.yaml"
     fi
