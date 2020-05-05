@@ -18,6 +18,9 @@ RUN apt update && apt install -y git make g++ libx11-dev libfftw3-dev \
 #        apt install python3 python3-pip git
 #        rm -rf /var/lib/apt/lists/*
 
+# Install blocksat-cli
+RUN pip3 install blocksat-cli
+
 # Leandvb
 RUN mkdir -p ~/src/ && cd ~/src/ && \
 	git clone --depth 1 --recursive https://github.com/Blockstream/leansdr.git && \
