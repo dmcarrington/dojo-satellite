@@ -435,10 +435,12 @@ logs() {
 }
 
 #create_blocksat() {
-#  wget -qO /tmp/satellite-master.zip https://github.com/Blockstream/satellite/archive/master.zip
-#  unzip /tmp/satellite-master.zip -d /tmp
-#  docker build -t blocksat /tmp/satellite-master/
-#  rm -rf /tmp/satellite-master
+#  git clone https://github.com/Blockstream/satellite.git
+#  cd satellite
+#  python3 setup.py sdist
+#  cd docker
+#  # TODO get config.json into /root/.blocksat/config.json
+#  docker build -t blockstream/blocksat-usb -f usb.docker ..
 #}
 
 # Display the help
