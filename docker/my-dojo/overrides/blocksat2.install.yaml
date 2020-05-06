@@ -3,7 +3,7 @@ version: "3.2"
 services:
   blocksat2:
     image: "blocksat2"
-    container_name: blockstream/blocksat-sdr
+    container_name: blocksat2
     build:
       context: ./blocksat2
     env_file:
