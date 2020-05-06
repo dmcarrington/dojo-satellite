@@ -24,9 +24,11 @@ RUN mkdir -p ~/src/ && cd ~/src/ && \
 	install ldpc_tool /usr/local/bin
 
 # Tsduck
-RUN cd ~/src/ && git clone https://github.com/tsduck/tsduck.git && \
-	cd tsduck && \
-	make install NOTELETEXT=1 NOSRT=1 NOPCSC=1 NOCURL=1 NODTAPI=1 && \
+RUN cd ~/src/ && git clone https://github.com/tsduck/tsduck.git
+
+# reset to the last working commit (5/5/20)
+RUN cd ~/src/tsduck && git reset --hard 9562c26b8525b6c508f881d1547067c89f3012bf && \
+        make install CXX=g++ NOTELETEXT=1 NOSRT=1 NOPCSC=1 NOCURL=1 NODTAPI=1 && \
 	echo \
 	"\n# TSDuck\nsource ~/src/tsduck/src/tstools/release-x86_64/setenv.sh" \
 	>> ~/.bashrc

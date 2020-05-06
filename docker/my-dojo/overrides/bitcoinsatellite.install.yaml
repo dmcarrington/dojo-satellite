@@ -5,7 +5,7 @@ services:
     image: "samouraiwallet/dojo-bitcoinfibre:${DOJO_BITCOIND_VERSION_TAG}"
     container_name: bitcoind
     build:
-      context: ./bitcoinfibre
+      context: ./bitcoinsatellite
     env_file:
       - ./.env
       - ./conf/docker-common.conf
@@ -20,11 +20,10 @@ services:
     volumes:
       - data-bitcoind:/home/bitcoin/.bitcoin
       - data-tor:/var/lib/tor
-      - data-blocksat:/tmp/blocksat
     depends_on:
       - db
       - tor
-      - blocksat
+      - blocksat2
     networks:
       dojonet:
         ipv4_address: 172.28.1.5
