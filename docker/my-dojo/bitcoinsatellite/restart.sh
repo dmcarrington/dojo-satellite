@@ -35,10 +35,6 @@ bitcoind_options=(
   -udpmulticast=eth0,239.0.0.2:4434,172.28.1.5,1,blocksat-sdr
 )
 
-if [ "$DOJO_USE_BLOCKSAT" == "true" ]; then
-  bitcoind_options+=(-fecreaddevice=/tmp/blocksat/bitcoinfibre)
-fi
-
 if [ "$BITCOIND_RPC_EXTERNAL" == "on" ]; then
   bitcoind_options+=(-zmqpubhashtx=tcp://0.0.0.0:9500)
   bitcoind_options+=(-zmqpubrawblock=tcp://0.0.0.0:9503)
