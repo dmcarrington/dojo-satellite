@@ -7,16 +7,8 @@ ENV SATELLITE_URL https://github.com/Blockstream/satellite.git
 #################################################################
 
 # Dependencies
-RUN apt update && apt install -y git make g++ libx11-dev libfftw3-dev \
+RUN apt-get update && apt install -y git make g++ libx11-dev libfftw3-dev \
 	python3 rtl-sdr python3-pip
-
-#RUN     set -ex && \
-#        apt-get update && \
-#        apt-get install -y software-properties-common && \
-        #add-apt-repository ppa:blockstream/satellite && \
-        #apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y satellite && \
-#        apt install python3 python3-pip git
-#        rm -rf /var/lib/apt/lists/*
 
 # Install blocksat-cli
 RUN pip3 install blocksat-cli
@@ -34,7 +26,7 @@ RUN mkdir -p ~/src/ && cd ~/src/ && \
 # Tsduck
 RUN cd ~/src/ && git clone https://github.com/tsduck/tsduck.git && \
 	cd tsduck && \
-	make NOTELETEXT=1 NOSRT=1 NOPCSC=1 NOCURL=1 NODTAPI=1 && \
+	make install NOTELETEXT=1 NOSRT=1 NOPCSC=1 NOCURL=1 NODTAPI=1 && \
 	echo \
 	"\n# TSDuck\nsource ~/src/tsduck/src/tstools/release-x86_64/setenv.sh" \
 	>> ~/.bashrc
@@ -42,7 +34,7 @@ RUN cd ~/src/ && git clone https://github.com/tsduck/tsduck.git && \
 # Copy USB rules for RTL-SDR
 COPY    ./rtl-sdr.rules /etc/udev/rules.d/rtl-sdr.rules
 
-# Copy blocksat config
+# Copy blocksat config - do this last to avoid having to rebuild if we need to change it :)
 COPY ./config.json /root/.blocksat/config.json
 
 ENTRYPOINT ["blocksat-cli"]
