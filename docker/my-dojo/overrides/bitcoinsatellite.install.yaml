@@ -1,9 +1,9 @@
 version: "3.2"
 
 services:
-  bitcoind:
-    image: "samouraiwallet/dojo-bitcoinfibre:${DOJO_BITCOIND_VERSION_TAG}"
-    container_name: bitcoind
+  bitcoinsatellite:
+    image: "samouraiwallet/dojo-bitcoinsatellite:${DOJO_BITCOIND_VERSION_TAG}"
+    container_name: bitcoinsatellite
     build:
       context: ./bitcoinsatellite
     env_file:
@@ -30,7 +30,7 @@ services:
 
   node:
     depends_on:
-      - bitcoind
+      - bitcoinsatellite
 
 volumes:
   data-bitcoind:

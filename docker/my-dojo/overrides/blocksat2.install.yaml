@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   blocksat2:
-    image: "blocksat2"
+    image: "blockstream/blocksat2"
     container_name: blocksat2
     build:
       context: ./blocksat2

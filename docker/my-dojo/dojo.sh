@@ -421,7 +421,11 @@ logs() {
       yamlFiles=$(select_yaml_files)
       services="nginx node tor db" 
       if [ "$BITCOIND_INSTALL" == "on" ]; then
-        services="$services bitcoind"
+        if [ "$DOJO_USE_BLOCKSAT" == "true" ]; then
+          services="$services bitcoinsatellite"
+        else
+          services="$services bitcoind"
+        fi
       fi
       if [ "$EXPLORER_INSTALL" == "on" ]; then
         services="$services explorer"
