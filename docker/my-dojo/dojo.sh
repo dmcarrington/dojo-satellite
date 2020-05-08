@@ -438,15 +438,6 @@ logs() {
   esac
 }
 
-#create_blocksat() {
-#  git clone https://github.com/Blockstream/satellite.git
-#  cd satellite
-#  python3 setup.py sdist
-#  cd docker
-#  # TODO get config.json into /root/.blocksat/config.json
-#  docker build -t blockstream/blocksat-usb -f usb.docker ..
-#}
-
 # Display the help
 help() {
   echo "Usage: dojo.sh command [module] [options]"
