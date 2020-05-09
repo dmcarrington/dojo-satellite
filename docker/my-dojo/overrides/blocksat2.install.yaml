@@ -12,7 +12,7 @@ services:
       - ./conf/docker-blocksat.conf
     restart: always
     privileged: true
-    command: "sdr --derotate 250 -g 30 -d"
+    command: "sdr --derotate 273 -g 12 -d"
     expose:
       - "8333"
       - "28256"
