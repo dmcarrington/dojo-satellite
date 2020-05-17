@@ -36,7 +36,7 @@ RUN cd ~/src/tsduck && git reset --hard 9562c26b8525b6c508f881d1547067c89f3012bf
 # Copy USB rules for RTL-SDR
 COPY    ./rtl-sdr.rules /etc/udev/rules.d/rtl-sdr.rules
 
-RUN sysctl -w fs.pipe-max-size=2073600
+RUN sysctl -w fs.pipe-max-size=33554432
 
 # Copy blocksat config - do this last to avoid having to rebuild if we need to change it :)
 COPY ./config.json /root/.blocksat/config.json
