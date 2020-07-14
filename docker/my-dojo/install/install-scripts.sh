@@ -61,9 +61,6 @@ init_config_files() {
   cp ./conf/docker-bitcoind.conf.tpl ./conf/docker-bitcoind.conf
   echo "Initialized docker-bitcoind.conf"
 
-  cp ./conf/docker-bitcoinfibre.conf.tpl ./conf/docker-bitcoinfibre.conf
-  echo "Initialized docker-bitcoinfibre.conf"
-
   cp ./conf/docker-blocksat.conf.tpl ./conf/docker-blocksat.conf
   echo "Initialized docker-blocksat.conf"
   
